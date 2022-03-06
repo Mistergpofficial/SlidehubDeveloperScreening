@@ -39,7 +39,7 @@
 								</div>
 								<div>
 									<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">No of Repos</label>
-									<input type="text" name="repos" id="repos" v-model="user.public_repos" placeholder="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
+									<input type="text" name="repos" id="repos" v-model="repositories.length" placeholder="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
 								</div>
 								<div>
 									<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Url</label>
@@ -54,12 +54,10 @@
 			
 	<template v-if="usersList.length > 0">
         <table class='mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
-            <thead class="bg-gray-900">
+            <thead class="bg-gray-900" style="width:100%;">
                 <tr class="text-white text-left">
-                    <th class="font-semibold text-sm uppercase px-6 py-4"> Name </th>
-                    <th class="font-semibold text-sm uppercase px-6 py-4"> Company </th>
-					<th class="font-semibold text-sm uppercase px-6 py-4"> Stats </th>
-                    <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Url </th>
+                    <th class="font-semibold text-sm uppercase px-6 py-4"> Developer candidates </th>
+					<th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Stats </th>
                     <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Repos </th>
                     <th class="font-semibold text-sm uppercase px-6 py-4"> Admin </th>
                 </tr>
@@ -68,23 +66,15 @@
                 <tr v-for="(users, index) in usersList" :key="index">
                    <td class="px-6 py-4">
                         <p class="">  </p>
-                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.name }} </p>
+                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.name }} </p><br>
+						 <p class="btn btn-primary"> {{ users.company }} &nbsp; {{ users.url }}</p>
                     </td>
-                    <td class="px-6 py-4">
-                        <p class="">  </p>
-                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.company }}</p>
-                    </td>
-					<td class="px-6 py-4" v-for="(repo, index) in filter" :key="index">
-                        <p class="">  </p>
-                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ repo.language }}</p>
+					<td class="px-6 py-4" v-for="(repo, index) in distinctLanguage" :key="index">
+                        <small> {{ repo }}</small>
                     </td>
 					<td class="px-6 py-4">
                         <p class="">  </p>
-                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.url }}</p>
-                    </td>
-					<td class="px-6 py-4">
-                        <p class="">  </p>
-                        <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.repos }}</p>
+                        <p class="btn btn-primary"> {{ users.repos }}</p>
                     </td>
 					 <td class="px-6 py-4 text-center">
 					  <a v-bind:href="editLink + users.id" class="text-purple-800 hover:underline" ><i class="fa fa-pencil"></i></a>
@@ -124,11 +114,11 @@
 </template>
 
 <script>
-
+import uniq from 'lodash/uniq'
 export default {
     data() {
         return {
-			repositories: {},
+			repositories: [],
             user: [],
 			usersList: {},
 			//repos: {},
@@ -149,11 +139,12 @@ export default {
         editLink() {
             return `${window.location.origin}/user/edit/`;
         },
-	filter()  {
-      return [...new Map(this.repositories.map(item => [item.language, item])).values()];
-  }
+		
+	 distinctLanguage () {
+    	return uniq(this.repositories.map(({ language }) => language))
+  		}
 	},
-	
+
 
 	methods: {
 		async getUsersFromDatabase() {
@@ -185,7 +176,7 @@ export default {
 
 					localStorage.setItem('username', username);
 
-					//this.getRepositories();
+					this.getRepositories();
                 }
             } catch (error) {}
             this.isLoading = false;
