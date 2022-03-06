@@ -172,7 +172,7 @@ export default {
 
 		 async fetchUser() {
             this.isLoading = true;
-			let cart = this.form.username || [];
+			let username = this.form.username || [];
             try {
                 const response = await axios.get(`https://api.github.com/users/${this.form.username}`);
 
@@ -183,7 +183,7 @@ export default {
 
                     this.user = response.data
 
-					localStorage.setItem('cart', cart);
+					localStorage.setItem('username', username);
 
 					//this.getRepositories();
                 }
@@ -194,9 +194,9 @@ export default {
 		 getRepositories() {
           //  this.isLoading = true;
 
-		  let cart = localStorage.getItem('cart') || [];
+		  let username = localStorage.getItem('username') || [];
 		
-             axios.get(`https://api.github.com/users/${cart}/repos`).then(response =>{
+             axios.get(`https://api.github.com/users/${username}/repos`).then(response =>{
                this.repositories = response.data
 			 }).catch(err => {
 				 console.log(err);

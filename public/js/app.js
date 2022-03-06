@@ -5646,13 +5646,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var cart, response;
+        var username, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.isLoading = true;
-                cart = _this2.form.username || [];
+                username = _this2.form.username || [];
                 _context2.prev = 2;
                 _context2.next = 5;
                 return axios.get("https://api.github.com/users/".concat(_this2.form.username));
@@ -5664,7 +5664,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 if (response.status === 200) {
                   _this2.isLoading = false;
                   _this2.user = response.data;
-                  localStorage.setItem('cart', cart); //this.getRepositories();
+                  localStorage.setItem('username', username); //this.getRepositories();
                 }
 
                 _context2.next = 11;
@@ -5689,8 +5689,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _this3 = this;
 
       //  this.isLoading = true;
-      var cart = localStorage.getItem('cart') || [];
-      axios.get("https://api.github.com/users/".concat(cart, "/repos")).then(function (response) {
+      var username = localStorage.getItem('username') || [];
+      axios.get("https://api.github.com/users/".concat(username, "/repos")).then(function (response) {
         _this3.repositories = response.data;
       })["catch"](function (err) {
         console.log(err);
