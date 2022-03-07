@@ -18,3 +18,6 @@ npm install and also composer install<br>
 # Run the application by typing:<br>
 localhost:{port}/{project-folder-name}<br>
 This will start the server<br>
+
+## Live Url
+https://api-integration-project.herokuapp.com/
