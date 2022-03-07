@@ -23,7 +23,7 @@
 
 		</div>
 	</body>
-	<script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+	<script src="{{ secure_asset('js/app.js') }}" charset="utf-8"></script>
 	<script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
 
 	<script type="text/javascript">
