@@ -69,8 +69,12 @@
                         <p class="text-gray-500 text-sm font-semibold tracking-wide"> {{ users.name }} </p><br>
 						 <p class="btn btn-primary"> {{ users.company }} &nbsp; {{ users.url }}</p>
                     </td>
-					<td class="px-6 py-4" v-for="(repo, index) in distinctLanguage" :key="index">
+				<!--	<td class="px-6 py-4" v-for="(repo, index) in distinctLanguage" :key="index">
                         <small> {{ repo }}</small>
+                    </td> -->
+					<td class="px-6 py-4">
+                        <p class="">  </p>
+                        <p class="btn btn-primary"> {{ JSON.parse(users.language.replace(/\"/g, "")) }}</p>
                     </td>
 					<td class="px-6 py-4">
                         <p class="">  </p>
@@ -78,13 +82,11 @@
                     </td>
 					 <td class="px-6 py-4 text-center">
 					  <a v-bind:href="editLink + users.id" class="text-purple-800 hover:underline" ><i class="fa fa-pencil"></i></a>
-					  <a href="#" class="text-purple-800 hover:underline" type="button" data-modal-toggle="authentication2-modal"><i class="fa fa-trash"></i></a>
+					  <a @click="deleteUser" class="text-purple-800 hover:underline" type="button" data-modal-toggle="authentication2-modal"><i class="fa fa-trash"></i></a>
 					   </td>
                 </tr>
 
 
-				
-            
             </tbody>
         </table>
 	</template>
@@ -130,6 +132,9 @@ export default {
 			isSubmitting: false
         };
     },
+	 props: [
+            'id'
+        ],
 
 	mounted(){
 		this.getUsersFromDatabase();
@@ -198,7 +203,7 @@ export default {
 
 		next() {
 				this.saving = true ;
-				axios.post(`${window.location.origin}/api/submit-form`, {"name": this.user.name, "company": this.user.company, "url": this.user.url, "repos": this.user.public_repos})
+				axios.post(`${window.location.origin}/api/submit-form`, {"name": this.user.name, "company": this.user.company, "url": this.user.url, "repos": this.user.public_repos, "language": this.distinctLanguage})
                     .then(function (response) {
                      window.location = `${window.location.origin}`
                     })
@@ -207,6 +212,17 @@ export default {
                       //  console.log(err)
                     });
             },
+		deleteUser(){
+			let shouldDelete = confirm('Are you sure you want to delete this user');
+              if (!shouldDelete) return;
+              axios.post(`${window.location.origin}/api/user/delete/${this.id}`, this.company).then(response => {
+                      alert("Successfully Deleted !!");
+                       window.location = `${window.location.origin}`
+                  })
+                  .catch(() => {
+                      alert('error', "could not delete !!");
+                  })
+		},
 
 		created() {
 		this.fetchUser();

@@ -5368,7 +5368,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.isLoading = true;
                 _context.prev = 1;
                 _context.next = 4;
-                return axios.get("http://localhost:8000/api/user/edit/".concat(_this.id));
+                return axios.get("".concat(window.location.origin, "/api/user/edit/").concat(_this.id));
 
               case 4:
                 response = _context.sent;
@@ -5400,13 +5400,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       this.saving = true;
-      axios.post("http://localhost:8000/api/user/update/".concat(this.id), {
+      axios.post("".concat(window.location.origin, "/api/user/update/").concat(this.id), {
         "name": this.user.name,
         "company": this.user.company,
         "url": this.user.url,
         "repos": this.user.repos
       }).then(function (response) {
-        window.location = 'http://localhost:8000';
+        window.location = '${window.location.origin}';
       })["catch"](function (err) {
         _this2.saving = false;
       });
@@ -5552,6 +5552,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5568,6 +5570,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isSubmitting: false
     };
   },
+  props: ['id'],
   mounted: function mounted() {
     this.getUsersFromDatabase();
     this.getRepositories();
@@ -5688,11 +5691,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         "name": this.user.name,
         "company": this.user.company,
         "url": this.user.url,
-        "repos": this.user.public_repos
+        "repos": this.user.public_repos,
+        "language": this.distinctLanguage
       }).then(function (response) {
         window.location = "".concat(window.location.origin);
       })["catch"](function (err) {
         _this4.saving = false; //  console.log(err)
+      });
+    },
+    deleteUser: function deleteUser() {
+      var shouldDelete = confirm('Are you sure you want to delete this user');
+      if (!shouldDelete) return;
+      axios.post("".concat(window.location.origin, "/api/user/delete/").concat(this.id), this.company).then(function (response) {
+        alert("Successfully Deleted !!");
+        window.location = "".concat(window.location.origin);
+      })["catch"](function () {
+        alert('error', "could not delete !!");
       });
     },
     created: function created() {
@@ -31527,68 +31541,77 @@ var render = function () {
                       "tbody",
                       { staticClass: "divide-y divide-gray-200" },
                       _vm._l(_vm.usersList, function (users, index) {
-                        return _c(
-                          "tr",
-                          { key: index },
-                          [
-                            _c("td", { staticClass: "px-6 py-4" }, [
-                              _c("p", {}),
-                              _vm._v(" "),
-                              _c(
-                                "p",
-                                {
-                                  staticClass:
-                                    "text-gray-500 text-sm font-semibold tracking-wide",
-                                },
-                                [_vm._v(" " + _vm._s(users.name) + " ")]
-                              ),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "btn btn-primary" }, [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(users.company) +
-                                    "   " +
-                                    _vm._s(users.url)
-                                ),
-                              ]),
-                            ]),
+                        return _c("tr", { key: index }, [
+                          _c("td", { staticClass: "px-6 py-4" }, [
+                            _c("p", {}),
                             _vm._v(" "),
-                            _vm._l(
-                              _vm.distinctLanguage,
-                              function (repo, index) {
-                                return _c(
-                                  "td",
-                                  { key: index, staticClass: "px-6 py-4" },
-                                  [_c("small", [_vm._v(" " + _vm._s(repo))])]
-                                )
-                              }
+                            _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "text-gray-500 text-sm font-semibold tracking-wide",
+                              },
+                              [_vm._v(" " + _vm._s(users.name) + " ")]
+                            ),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "btn btn-primary" }, [
+                              _vm._v(
+                                " " +
+                                  _vm._s(users.company) +
+                                  "   " +
+                                  _vm._s(users.url)
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "px-6 py-4" }, [
+                            _c("p", {}),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "btn btn-primary" }, [
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    JSON.parse(
+                                      users.language.replace(/\"/g, "")
+                                    )
+                                  )
+                              ),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "px-6 py-4" }, [
+                            _c("p", {}),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "btn btn-primary" }, [
+                              _vm._v(" " + _vm._s(users.repos)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "px-6 py-4 text-center" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-purple-800 hover:underline",
+                                attrs: { href: _vm.editLink + users.id },
+                              },
+                              [_c("i", { staticClass: "fa fa-pencil" })]
                             ),
                             _vm._v(" "),
-                            _c("td", { staticClass: "px-6 py-4" }, [
-                              _c("p", {}),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "btn btn-primary" }, [
-                                _vm._v(" " + _vm._s(users.repos)),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "px-6 py-4 text-center" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "text-purple-800 hover:underline",
-                                  attrs: { href: _vm.editLink + users.id },
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-purple-800 hover:underline",
+                                attrs: {
+                                  type: "button",
+                                  "data-modal-toggle": "authentication2-modal",
                                 },
-                                [_c("i", { staticClass: "fa fa-pencil" })]
-                              ),
-                              _vm._v(" "),
-                              _vm._m(2, true),
-                            ]),
-                          ],
-                          2
-                        )
+                                on: { click: _vm.deleteUser },
+                              },
+                              [_c("i", { staticClass: "fa fa-trash" })]
+                            ),
+                          ]),
+                        ])
                       }),
                       0
                     ),
@@ -31603,7 +31626,7 @@ var render = function () {
                       "mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden",
                   },
                   [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("tbody", { staticClass: "divide-y divide-gray-200" }, [
                       _c("tr", [
@@ -31685,23 +31708,6 @@ var staticRenderFns = [
           ),
         ]),
       ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "text-purple-800 hover:underline",
-        attrs: {
-          href: "#",
-          type: "button",
-          "data-modal-toggle": "authentication2-modal",
-        },
-      },
-      [_c("i", { staticClass: "fa fa-trash" })]
     )
   },
   function () {

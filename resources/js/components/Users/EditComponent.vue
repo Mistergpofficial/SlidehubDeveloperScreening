@@ -85,7 +85,7 @@ export default {
 		 async fetchUserById() {
             this.isLoading = true;
             try {
-                const response = await axios.get(`http://localhost:8000/api/user/edit/${this.id}`);
+                const response = await axios.get(`${window.location.origin}/api/user/edit/${this.id}`);
                 if (response.status === 200) {
                     this.isLoading = false;
 
@@ -97,9 +97,9 @@ export default {
 
 		update() {
 				this.saving = true ;
-				axios.post(`http://localhost:8000/api/user/update/${this.id}`, {"name": this.user.name, "company": this.user.company, "url": this.user.url, "repos": this.user.repos})
+				axios.post(`${window.location.origin}/api/user/update/${this.id}`, {"name": this.user.name, "company": this.user.company, "url": this.user.url, "repos": this.user.repos})
                     .then(function (response) {
-                     window.location = 'http://localhost:8000'
+                     window.location = '${window.location.origin}'
                     })
                     .catch((err) => {
                         this.saving = false ;

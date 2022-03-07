@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'company',
         'url',
-		'repos'
+		'repos',
+		'language'
     ];
 
     /**

@@ -21,6 +21,8 @@ class HomeController extends Controller
 		$user->company = $request->company;
 		$user->url = $request->url;
 		$user->repos = $request->repos;
+		
+		$user->language = json_encode($request->language);
 
 
         if ($user->save()) {
@@ -66,4 +68,22 @@ class HomeController extends Controller
 
         return $this->apiResponse('ok', 'User has been updated successfully.', $user, 200);
     }
+
+
+	public function delete(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+            'id' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return $this->apiResponse('error', 'Validation Error', $validator->errors(), 400);
+        }
+
+        User::find($request->id)->delete();
+
+        return $this->apiResponse('ok', 'User has been deleted successfully', null, 200);
+    }
+	
+	
 }

@@ -24,3 +24,4 @@ Route::post('submit-form', [HomeController::class, 'store']);
 Route::get('users', [HomeController::class, 'getUsers']);
 Route::get('user/edit/{id}', [HomeController::class, 'indexById']);
 Route::post('user/update/{id}', [HomeController::class, 'update']);
+Route::post('user/delete/{id}', [HomeController::class, 'delete']);
