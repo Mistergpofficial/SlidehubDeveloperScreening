@@ -99,7 +99,7 @@ export default {
 				this.saving = true ;
 				axios.post(`${window.location.origin}/api/user/update/${this.id}`, {"name": this.user.name, "company": this.user.company, "url": this.user.url, "repos": this.user.repos})
                     .then(function (response) {
-                     window.location = '${window.location.origin}'
+					 window.location = `${window.location.origin}`
                     })
                     .catch((err) => {
                         this.saving = false ;

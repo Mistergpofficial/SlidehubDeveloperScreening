@@ -5406,7 +5406,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         "url": this.user.url,
         "repos": this.user.repos
       }).then(function (response) {
-        window.location = '${window.location.origin}';
+        window.location = "".concat(window.location.origin);
       })["catch"](function (err) {
         _this2.saving = false;
       });
@@ -5580,10 +5580,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return "".concat(window.location.origin, "/user/edit/");
     },
     distinctLanguage: function distinctLanguage() {
-      return lodash_uniq__WEBPACK_IMPORTED_MODULE_1___default()(this.repositories.map(function (_ref) {
+      return lodash_uniq__WEBPACK_IMPORTED_MODULE_1___default()(_.filter(this.repositories.map(function (_ref) {
         var language = _ref.language;
         return language;
-      }));
+      }))); //return _.filter(sourceData, ['is_default', null ]);
     }
   },
   methods: {
@@ -5704,7 +5704,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!shouldDelete) return;
       axios.post("".concat(window.location.origin, "/api/user/delete/").concat(this.id), this.company).then(function (response) {
         alert("Successfully Deleted !!");
-        window.location = "".concat(window.location.origin);
+        window.location = "http://localhost:8000";
       })["catch"](function () {
         alert('error', "could not delete !!");
       });
@@ -31569,14 +31569,7 @@ var render = function () {
                             _c("p", {}),
                             _vm._v(" "),
                             _c("p", { staticClass: "btn btn-primary" }, [
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    JSON.parse(
-                                      users.language.replace(/\"/g, "")
-                                    )
-                                  )
-                              ),
+                              _vm._v(" " + _vm._s(JSON.parse(users.language))),
                             ]),
                           ]),
                           _vm._v(" "),

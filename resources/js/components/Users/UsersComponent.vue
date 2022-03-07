@@ -74,7 +74,7 @@
                     </td> -->
 					<td class="px-6 py-4">
                         <p class="">  </p>
-                        <p class="btn btn-primary"> {{ JSON.parse(users.language.replace(/\"/g, "")) }}</p>
+                        <p class="btn btn-primary"> {{ JSON.parse(users.language) }}</p>
                     </td>
 					<td class="px-6 py-4">
                         <p class="">  </p>
@@ -146,8 +146,12 @@ export default {
         },
 		
 	 distinctLanguage () {
-    	return uniq(this.repositories.map(({ language }) => language))
+    	return uniq(_.filter(this.repositories.map(({ language }) => language)))
+
+		//return _.filter(sourceData, ['is_default', null ]);
   		}
+
+		
 	},
 
 
@@ -217,7 +221,7 @@ export default {
               if (!shouldDelete) return;
               axios.post(`${window.location.origin}/api/user/delete/${this.id}`, this.company).then(response => {
                       alert("Successfully Deleted !!");
-                       window.location = `${window.location.origin}`
+                       window.location = `http://localhost:8000`
                   })
                   .catch(() => {
                       alert('error', "could not delete !!");
