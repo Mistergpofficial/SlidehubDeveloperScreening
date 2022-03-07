@@ -2,7 +2,7 @@
 	<head>
 	<title>Slidehub.io Developer Screening</title>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<link href="{{ asset('css/dist/output.css') }}" rel="stylesheet">
+	<link href="{{ secure_asset('css/dist/output.css') }}" rel="stylesheet">
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	</head>
