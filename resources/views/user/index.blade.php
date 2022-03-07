@@ -1,6 +1,6 @@
 <html>
 	<head>
-	<title>Slidehub.io Developer Screening</title>
+	<title>EHURIAH CHUKWUDIKE</title>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link href="{{ secure_asset('css/dist/output.css') }}" rel="stylesheet">
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -10,7 +10,7 @@
 		<div id="app">
 			<div class="container">
 				<!-- dashboard header -->
-				<h4><center>Slidehub.io Developer Screening</center></h4>
+				<h4><center>EHURIAH CHUKWUDIKE</center></h4>
 
 				
 			
